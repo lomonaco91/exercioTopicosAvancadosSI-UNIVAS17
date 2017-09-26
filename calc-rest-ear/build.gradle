@@ -1,0 +1,16 @@
+apply plugin: 'ear'
+
+dependencies {
+	deploy project(path: ':calc-rest-war', configuration: 'archives')
+	earlib project(':calc-rest-core')
+	earlib project(':calc-rest-api')
+}
+
+ear {
+	deploymentDescriptor {
+		def warName = project(':calc-rest-war').name
+		def warVersion = project(':calc-rest-war').version
+		def warFileName = warName + '-' + warVersion + '.war'
+		webModule(warFileName, 'calculator')
+	}
+}
